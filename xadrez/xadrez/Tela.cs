@@ -10,23 +10,38 @@ namespace xadrez
 
         public static void ImprimirPartida(PartidaXadrez partida)
         {
-            Tela.ImprimirTabuleiro(partida.Tab);
+            ImprimirTabuleiro(partida.Tab);
+            Console.WriteLine();
             ImprimirPecasCapturadas(partida);
-            Console.WriteLine("\n\n-> Turno: " + partida.Turno);
-            Console.WriteLine("-> Aguardando Jogada: " + partida.JogadorAtual);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + partida.Turno);
+            if (!partida.Terminada)
+            {
+                Console.WriteLine("Aguardando jogada: " + partida.JogadorAtual);
+                if (partida.Xeque)
+                {
+                    Console.WriteLine("XEQUE!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("XEQUEMATE!");
+                Console.WriteLine("Vencedor: " + partida.JogadorAtual);
+            }
         }
 
         public static void ImprimirPecasCapturadas(PartidaXadrez partida)
         {
-            Console.WriteLine("\n\n-> Peças Capturadas: ");
-            Console.Write("-> Azuis: ");
+            Console.WriteLine("Peças capturadas:");
+            Console.Write("Brancas: ");
             ImprimirConjunto(partida.PecasCapturadas(Cor.Azul));
-            Console.Write("\n-> Verdes: ");
+            Console.WriteLine();
+            Console.Write("Pretas: ");
             ConsoleColor aux = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             ImprimirConjunto(partida.PecasCapturadas(Cor.Verde));
             Console.ForegroundColor = aux;
-            Console.WriteLine("");
+            Console.WriteLine();
         }
 
         public static void ImprimirConjunto(HashSet<Peca> conjunto)
@@ -94,7 +109,7 @@ namespace xadrez
         public static void ImprimirPeca(Peca peca)
         {
             ConsoleColor fundoOriginal = Console.BackgroundColor;
-            ConsoleColor fundoAlterado = ConsoleColor.White;
+            ConsoleColor fundoAlterado = ConsoleColor.Blue;
 
             if (peca == null)
             {
